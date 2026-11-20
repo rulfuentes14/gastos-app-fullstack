@@ -1,0 +1,113 @@
+<div class="flex flex-col h-screen bg-slate-50 font-sans text-slate-800">
+  
+  <!-- ================= HEADER ================= -->
+  <header class="flex items-center justify-between px-6 h-[64px] bg-slate-900 text-white shadow-lg z-20 shrink-0">
+    
+    <!-- Logo & Toggle -->
+    <div class="flex items-center gap-4">
+      <button 
+        (click)="toggleSidebar()" 
+        class="p-2 rounded-lg hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+        aria-label="Toggle Sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+      <h1 class="text-xl font-bold tracking-tight text-blue-400">GastosApp</h1>
+    </div>
+
+    <!-- Search Bar (Hidden on mobile) -->
+    <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
+      <input 
+        type="text" 
+        placeholder="Buscar gastos, transacciones..." 
+        class="w-full pl-10 pr-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+      />
+      <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+    </div>
+
+    <!-- User Profile -->
+    <div class="flex items-center gap-3">
+      <div class="text-right hidden sm:block">
+        <p class="text-sm font-medium leading-none">Administrador</p>
+        <p class="text-xs text-slate-400 mt-1">admin@gastosapp.com</p>
+      </div>
+      <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold border-2 border-slate-700">
+        A
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= BODY WRAPPER ================= -->
+  <div class="flex flex-1 overflow-hidden">
+    
+    <!-- ================= SIDEBAR ================= -->
+    <aside 
+      class="bg-white border-r border-slate-200 flex flex-col transition-all duration-300 ease-in-out overflow-y-auto shrink-0"
+      [class.w-64]="!isSidebarCollapsed()"
+      [class.w-20]="isSidebarCollapsed()">
+      
+      <nav class="flex-1 py-6 px-3 space-y-1">
+        
+        <!-- Dashboard Link -->
+        <a routerLink="/dashboard" routerLinkActive="bg-blue-50 text-blue-700 border-r-4 border-blue-600"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+          <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+          <span class="font-medium whitespace-nowrap transition-opacity duration-200" [class.opacity-0]="isSidebarCollapsed()" [class.w-0]="isSidebarCollapsed()">Dashboard</span>
+        </a>
+
+        <!-- Expenses Link -->
+        <a routerLink="/expenses" routerLinkActive="bg-blue-50 text-blue-700 border-r-4 border-blue-600"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+          <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span class="font-medium whitespace-nowrap transition-opacity duration-200" [class.opacity-0]="isSidebarCollapsed()" [class.w-0]="isSidebarCollapsed()">Gastos Diarios</span>
+        </a>
+
+        <!-- Budgets Link -->
+        <a routerLink="/budgets" routerLinkActive="bg-blue-50 text-blue-700 border-r-4 border-blue-600"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+          <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          <span class="font-medium whitespace-nowrap transition-opacity duration-200" [class.opacity-0]="isSidebarCollapsed()" [class.w-0]="isSidebarCollapsed()">Presupuestos</span>
+        </a>
+
+        <!-- Credits Link -->
+        <a routerLink="/credits" routerLinkActive="bg-blue-50 text-blue-700 border-r-4 border-blue-600"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+          <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+          <span class="font-medium whitespace-nowrap transition-opacity duration-200" [class.opacity-0]="isSidebarCollapsed()" [class.w-0]="isSidebarCollapsed()">TDC y Créditos</span>
+        </a>
+
+      </nav>
+
+      <!-- Bottom Actions (Logout placeholder) -->
+      <div class="p-3 border-t border-slate-100">
+         <button class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            <span class="font-medium whitespace-nowrap transition-opacity duration-200" [class.opacity-0]="isSidebarCollapsed()" [class.w-0]="isSidebarCollapsed()">Cerrar Sesión</span>
+         </button>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT AREA ================= -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50">
+      
+      <!-- Breadcrumb -->
+      <div class="px-8 py-4 bg-white border-b border-slate-200 flex items-center gap-2 text-sm text-slate-500 shrink-0">
+        <span class="hover:text-blue-600 cursor-pointer">Inicio</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <span class="font-semibold text-slate-800">Dashboard</span>
+      </div>
+      
+      <!-- Dynamic Content Outlet -->
+      <div class="flex-1 overflow-y-auto p-8">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- Footer -->
+      <footer class="px-8 py-4 bg-white border-t border-slate-200 text-center text-xs text-slate-400 shrink-0">
+        &copy; {{ currentYear }} GastosApp. Sistema de Administración Financiera Personal. v1.0.0
+      </footer>
+      
+    </main>
+  </div>
+</div>

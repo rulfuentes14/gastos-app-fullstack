@@ -1,0 +1,27 @@
+# Node Modules
+node_modules/
+npm-debug.log*
+
+# Environment Variables (NUNCA subir credenciales)
+.env
+.env.local
+.env.production
+
+# Build Outputs
+dist/
+build/
+.angular/
+.cache/
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Prisma Generated Client (se regenera al instalar)
+node_modules/.prisma/
